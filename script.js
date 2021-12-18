@@ -2,6 +2,7 @@ let buttons = document.querySelectorAll(".to-side");
 let main = document.querySelector(".main-frame");
 let buttonLeft = buttons[0];
 let buttonRight = buttons[1];
+let navigationWraps = document.querySelectorAll(".navigation-wrap");
 let navigations = document.querySelectorAll(".navigation-item");
 
 let slideCount = 1;
@@ -40,3 +41,14 @@ buttonRight.onclick = () => {
     navigations[slideCount - 2].classList.remove("navigation-item--active");
   }, 0);
 };
+
+
+for (let i = 0; i < navigations.length; i++) {
+  navigationWraps[i].onclick = () => {
+    navigations[slideCount - 1].classList.remove("navigation-item--active");
+    main.style.transition = "0.3s ease-in-out";
+    main.style.left = -559.376 * (i + 1) + "px";
+    navigations[i].classList.add("navigation-item--active");
+    slideCount = i + 1;
+  };
+}

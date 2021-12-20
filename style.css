@@ -47,6 +47,7 @@ body {
   font-weight: bolder;
   font-family: "Lato", "Helvetica Neue", "Helvetica", Helvetica, Arial,
     sans-serif;
+  user-select: none;  
 }
 
 .to-side {

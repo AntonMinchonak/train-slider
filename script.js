@@ -11,25 +11,63 @@ let buttonClicked = 0;
 
 console.log(window.getComputedStyle(main).left);
 
+// function leftClick() {
+//   buttonLeft.onclick = "";
+//   setTimeout(() => {
+//     buttonLeft.onclick = () => {
+//       leftClick();
+//     };
+//   }, 300);
+
+//   if (slideCount === 1) {
+//     slideCount = 7;
+//     main.style.transition = "none";
+//     main.style.left = -3915 + "px";
+//     (upPoint = -3356), 256;
+//     navigations[0].classList.remove("navigation-item--active");
+//   }
+//   setTimeout(() => {
+//     main.style.transition = "0.3s ease-in-out";
+//     --slideCount;
+//     main.style.left = -559.376 * slideCount + "px";
+//     navigations[slideCount - 1].classList.add("navigation-item--active");
+//     navigations[slideCount].classList.remove("navigation-item--active");
+//     console.log("buttonleft");
+//     console.log("slideCount " + slideCount);
+//     console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + "  upPoint: " + upPoint);
+//     upPoint = -559.376 * slideCount;
+//   }, 0);
+//   buttonClicked = 1;
+//   console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + "  upPoint: " + upPoint);
+// }
+
+// buttonLeft.onclick = () => {
+//   leftClick();
+// };
+
+
 buttonLeft.onclick = () => {
   if (slideCount === 1) {
     slideCount = 7;
     main.style.transition = "none";
     main.style.left = -3915 + "px";
-     upPoint = -3356;
+     upPoint = -3356,256;
     navigations[0].classList.remove("navigation-item--active");
   }
   setTimeout(() => {
     main.style.transition = "0.3s ease-in-out";
-    slideCount--;
+    
+    --slideCount;
     main.style.left = -559.376 * slideCount + "px";
     navigations[slideCount - 1].classList.add("navigation-item--active");
     navigations[slideCount].classList.remove("navigation-item--active");
     console.log("buttonleft");
     console.log("slideCount " + slideCount);
+     console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + "  upPoint: " + upPoint);
     upPoint = -559.376 * slideCount;
   }, 0);
   buttonClicked = 1;
+   console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + "  upPoint: " + upPoint);
 };
 
 buttonRight.onclick = () => {
@@ -38,23 +76,23 @@ buttonRight.onclick = () => {
     main.style.transition = "none";
     main.style.left = 0 + "px";
     navigations[5].classList.remove("navigation-item--active");
-    console.log("slideCount " + slideCount);
+  
     upPoint = -559.376;
   }
   setTimeout(() => {
     main.style.transition = "0.3s ease-in-out";
-    console.log("slideCount " + slideCount);
+  
     slideCount++;
     main.style.left = -559.376 * slideCount + "px";
     navigations[slideCount - 1].classList.add("navigation-item--active");
     navigations[slideCount - 2].classList.remove("navigation-item--active");
     console.log("buttoright");
-    console.log("slideCount " + slideCount);
+    console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + "  upPoint: " + upPoint);
     upPoint = -559.376 * slideCount;
-    console.log("slideCount " + slideCount);
+  
   }, 0);
   buttonClicked = 1;
-  console.log("slideCount " + slideCount);
+ console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + "  upPoint: " + upPoint);
 };
 
 for (let i = 0; i < navigations.length; i++) {
@@ -75,22 +113,19 @@ let pressPoint;
 let prevMod = 0;
 let startLeftPos;
 
-main.onmousedown = () => {
+function pressDown() {
   if (buttonClicked) {
     prevMod = -559.376;
   }
+    console.log("PRESSED: " + "left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + " pressPoint: " + pressPoint);
   main.style.transition = "";
   pressPoint = window.event.pageX - 690 - upPoint + prevMod; //  Расчёт места нажатия (положительное значение). Значение всегда больше 0
   pressFlag = 1;
   startLeftPos = Number(window.getComputedStyle(main).left.replace("px", ""));
-  console.log("PRESSED: " + "left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + " pressPoint: " + pressPoint);
-  console.log(slideCount + " countSlide");
-  console.log(window.event.pageX + " pageX");
-  console.log(upPoint + " UPpoint");
+console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + "  upPoint: " + upPoint + " pressPoint: " + pressPoint);
+  
 
   main.onmousemove = () => {
-    console.log("MOVE " + Number(window.getComputedStyle(main).left.replace("px", "")) + "px");
-
     ////// LOOP FOR FREE MODE //////
     // if (Number(window.getComputedStyle(main).left.replace("px", "")) > -500) {
     //       console.log( Number(window.getComputedStyle(main).left.replace("px", ""))+ ' NEWROLLBAAAAAAAAAAACK');
@@ -108,12 +143,32 @@ main.onmousedown = () => {
     //     pressPoint = window.event.pageX - 690 - upPoint + prevMod -10.376;
     // }
 
+    ////// LOOP FOR FUTURE FIX //////
+    // if (Number(window.getComputedStyle(main).left.replace("px", "")) > -500) {
+    //   console.log(Number(window.getComputedStyle(main).left.replace("px", "")) + " NEWROLLBAAAAAAAAAAACK");
+    //   main.style.left = "-3256px"; //-3256 px for free
+    //   prevMod = 0;
+    //   upPoint = 0;
+    //   pressPoint = window.event.pageX - 690 - upPoint + prevMod + 3296.366;
+    // }
+
+    // if (Number(window.getComputedStyle(main).left.replace("px", "")) < -3900) {
+    //   main.style.transition = "";
+    //   console.log(Number(window.getComputedStyle(main).left.replace("px", "")) + " NEWROLLNEEEEEEEEXTTTTTTTTTTT");
+    //   main.style.left = "-559.376px"; //-500px for free
+
+    //   upPoint = -559.376;
+    //   pressPoint = window.event.pageX - 690 - upPoint + prevMod + 49.376;
+    // }
+
     if (pressFlag === 1) {
-      console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + '  pressPoint: ' + pressPoint);
       main.style.left = window.event.pageX - 690 - 559.376 - pressPoint + "px"; // 1) При наведении и нажатии на main, положение main определяется положением курсора. 2) Но main находится на удалении 690px от начала страницы, поэтому чтобы начальная точка main (690px) соответствовала 0px, отнимается 690px. 3) Т.к. [0] карточка - под номером 6, а нам нужно, чтобы начинался отсчёт с 1-го номера, онимаем размер карточки -559.336px. 4) PressPoint см.выше. При движении мыши влево, отрицательное значение увеличивается, т.к. единственное положительное значение window.event.pageX, уменьшается, из-за этого maim уходит в больший минус и двигается влево
-      console.log("slideCount " + slideCount + "   left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + '  Other(pagex-690-559.376: '+ (window.event.pageX - 690 - 559.376));
     }
   };
+}
+
+main.onmousedown = () => {
+    pressDown()
 };
 
 ////// LOOP FOR FREE MODE //////
@@ -136,20 +191,20 @@ main.onmouseout = () => {
 };
 
 function endslide() {
+    
   pressFlag = 0;
   upPoint = Number(window.getComputedStyle(main).left.replace("px", "")); // Определяется место отжатия (отицательное значение).
   prevMod = -559.376;
   console.log("UPMOUSE: " + "left:" + Number(window.getComputedStyle(main).left.replace("px", "")) + "px" + " upPoint: " + upPoint);
-  console.log("slideCount " + slideCount);
-  ////// LOOP FOR AUTO-POSTSCROLL MODE //////
 
+  ////// LOOP FOR AUTO-POSTSCROLL MODE //////
   let minDiffItem = -559.376 * 7;
   let minItemIndex;
   let prevCount = 0;
 
   if (Math.abs(Math.abs(startLeftPos) - Math.abs(upPoint)) > 100) {
     if (Math.abs(startLeftPos) - Math.abs(upPoint) > 0) {
-       console.log("slideCount: " + slideCount + ", left:" + Number(window.getComputedStyle(main).left.replace("px", "")));
+
       for (let i = 0; i < 8; i++) {
         let compareItem = -559.376 * i;
         let differenceItem = startLeftPos - compareItem;
@@ -159,13 +214,13 @@ function endslide() {
           minItemIndex = i;
         }
       }
-  console.log("slideCount: " + slideCount + ", left:" + Number(window.getComputedStyle(main).left.replace("px", "")));
+ 
       main.style.transition = "0.3s ease-in-out";
       main.style.left = -559.376 * (minItemIndex - 1) + "px";
       slideCount = minItemIndex - 1;
       upPoint = -559.376 * (minItemIndex - 1);
 
-      console.log("slideCount: " + slideCount + ", left:" + Number(window.getComputedStyle(main).left.replace("px", "")));
+     
       main.ontransitionend = function () {
         if (Number(window.getComputedStyle(main).left.replace("px", "")) > -559.376) {
           slideCount = 6;
@@ -182,7 +237,7 @@ function endslide() {
       for (let i = 0; i < 8; i++) {
         let compareItem = -559.376 * i;
         let differenceItem = startLeftPos - compareItem;
-        console.log("slideCount: " + slideCount + ", left:" + Number(window.getComputedStyle(main).left.replace("px", "")));
+       
         if (Math.abs(differenceItem) < Math.abs(minDiffItem)) {
           minDiffItem = differenceItem;
           minItemIndex = i;
@@ -221,9 +276,7 @@ function endslide() {
         }
       }
       main.style.transition = "0.3s ease-in-out";
-       console.log("slideCount: " + slideCount + ", left:" + Number(window.getComputedStyle(main).left.replace("px", "")));
-      main.style.left = -559.376 * minItemIndex + "px";
-       console.log("slideCount: " + slideCount + ", left:" + Number(window.getComputedStyle(main).left.replace("px", "")));
+      main.style.left = -559.376 * minItemIndex + "px"; 
       slideCount = minItemIndex;
       upPoint = -559.376 * minItemIndex;
     } else if (Math.abs(startLeftPos) - Math.abs(upPoint) < 0) {
@@ -238,9 +291,7 @@ function endslide() {
         }
       }
       main.style.transition = "0.3s ease-in-out";
-       console.log("slideCount: " + slideCount + ", left:" + Number(window.getComputedStyle(main).left.replace("px", "")));
       main.style.left = -559.376 * minItemIndex + "px";
-       console.log("slideCount: " + slideCount + ", left:" + Number(window.getComputedStyle(main).left.replace("px", "")));
       slideCount = minItemIndex;
       upPoint = -559.376 * minItemIndex;
     }

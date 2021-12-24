@@ -45,9 +45,7 @@ body {
   font-size: 36px;
   background-color: white;
   font-weight: bolder;
-  font-family: "Lato", "Helvetica Neue", "Helvetica", Helvetica, Arial,
-    sans-serif;
-  user-select: none;  
+  font-family: "Lato", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 }
 
 .to-side {

@@ -2,6 +2,10 @@ html {
   background-color: #3498db;
 }
 
+* {
+user-select: none;
+}
+
 @font-face {
   font-family: "Lato", sans-serif;
   src: url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&display=swap");
@@ -30,15 +34,15 @@ body {
   background-color: #3498db;
   display: flex;
   position: relative;
-  left: -559.376px;
+  left: -560px;
 }
 
 .item {
   flex-shrink: 0;
-  width: 517px;
+  width: 540px;
   height: 100px;
-  padding: 2%;
   margin: 10px;
+  padding: 11px 0;
   text-align: center;
   line-height: 100px;
   color: #3498db;
@@ -65,6 +69,7 @@ body {
   height: 6px;
   transform: rotate(-45deg);
   margin: 5px 0 0 6px;
+  
 }
 
 .left {

@@ -2,6 +2,10 @@ html {
   background-color: #3498db;
 }
 
+* {
+user-select: none;
+}
+
 @font-face {
   font-family: "Lato", sans-serif;
   src: url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&display=swap");
@@ -18,11 +22,13 @@ body {
   gap: 10px;
   margin: 20px 0 5px 0;
   justify-content: center;
+  
 }
 
 .main {
   width: 560px;
   overflow: hidden;
+  justify-self: center;
 }
 
 .main-frame {
@@ -30,14 +36,14 @@ body {
   background-color: #3498db;
   display: flex;
   position: relative;
-  left: -559.376px;
+  left: -560px;
 }
 
 .item {
   flex-shrink: 0;
-  width: 517px;
+  width: 540px;
   height: 100px;
-  padding: 2%;
+  padding: 11px 0;
   margin: 10px;
   text-align: center;
   line-height: 100px;

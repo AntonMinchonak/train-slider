@@ -54,7 +54,7 @@ function afterSwitch() {
 function upMouse() {
   if (pressFlag) {
     pressFlag = false;
-    afterSwitch(true);
+    afterSwitch();
   }
   if (hiddenPress) {
     hiddenPress = false;

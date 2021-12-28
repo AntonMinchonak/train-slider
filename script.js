@@ -12,7 +12,7 @@ let animationEnd = true;
 let pressFlag = false;
 let pressPoint = 0;
 let upPoint = parseFloat(window.getComputedStyle(main).left);
-let startLeftPos = 0
+let startLeftPos = 0;
 let hiddenPress = false;
 let hiddenPressResolve = false;
 let hiddenFlagToUp = false;
@@ -47,20 +47,20 @@ function afterSwitch() {
   } else if (Math.abs(event.pageX - pressPoint) > 0) {
     switchSlide(slideCount);
   } else if (Math.abs(event.pageX - pressPoint) === 0) {
-    switchSlide(slideCount,false);
+    switchSlide(slideCount, false);
   }
 }
 
 function upMouse() {
-   if (pressFlag) {
-     pressFlag = false;
-     afterSwitch(true);
-   }
-   if (hiddenPress) {
-     hiddenPress = false;
-     afterSwitch();
-     hiddenPressResolve = false;
-   } 
+  if (pressFlag) {
+    pressFlag = false;
+    afterSwitch(true);
+  }
+  if (hiddenPress) {
+    hiddenPress = false;
+    afterSwitch();
+    hiddenPressResolve = false;
+  }
 }
 
 buttonLeft.onclick = () => switchSlide(slideCount - 1);
@@ -68,34 +68,37 @@ buttonLeft.onclick = () => switchSlide(slideCount - 1);
 buttonRight.onclick = () => switchSlide(slideCount + 1);
 
 for (let i = 0; i < navigations.length; i++) {
-  navigationWraps[i].onclick = () => switchSlide(i+1);
+  navigationWraps[i].onclick = () => {
+    switchSlide(i + 1);
+    animationEnd = true;
+  }
 }
 
 main.onmousedown = (event) => {
- if (animationEnd) {
-   pressFlag = true;
- } else {
-   hiddenPress = true;
-   hiddenFlagToUp = true;
+  if (animationEnd) {
+    pressFlag = true;
+  } else {
+    hiddenPress = true;
+    hiddenFlagToUp = true;
   }
   upPoint = parseFloat(window.getComputedStyle(main).left);
   pressPoint = event.pageX;
 };
 
 main.onmousemove = (event) => {
-    if (hiddenPressResolve && hiddenFlagToUp) {
-        hiddenFlagToUp = false;
-        upPoint = parseFloat(window.getComputedStyle(main).left);
-    } 
+  if (hiddenPressResolve && hiddenFlagToUp) {
+    hiddenFlagToUp = false;
+    upPoint = parseFloat(window.getComputedStyle(main).left);
+  }
   if (pressFlag || hiddenPressResolve) {
     main.style.left = event.pageX - pressPoint + upPoint + "px";
   }
 };
 
 main.onmouseup = () => {
- upMouse();
-}
+  upMouse();
+};
 
 superMain.onmouseleave = () => {
- upMouse();
+  upMouse();
 };

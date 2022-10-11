@@ -1,104 +1,84 @@
-let buttons = document.querySelectorAll(".to-side");
-let main = document.querySelector(".main-frame");
-let superMain = document.querySelector(".main");
-let buttonLeft = buttons[0];
-let buttonRight = buttons[1];
-let navigationWraps = document.querySelectorAll(".navigation-wrap");
-let navigations = document.querySelectorAll(".navigation-item");
-let mainWidth = parseFloat(window.getComputedStyle(main).width);
-let items = document.querySelectorAll(".item");
-let slideCount = 1;
-let animationEnd = true;
-let pressFlag = false;
-let pressPoint = 0;
-let upPoint = parseFloat(window.getComputedStyle(main).left);
-let startLeftPos = 0;
+const frame = document.querySelector(".frame");
+const slides = document.querySelector(".slides");
+const buttons = document.querySelectorAll(".button");
+const leftBtn = document.querySelector(".left");
+const rightBtn = document.querySelector(".right");
+const slideItems = document.querySelectorAll(".slide");
+const slider = document.querySelectorAll(".slider");
+const pages = document.querySelectorAll(".page-wrap");
+const pageDots = document.querySelectorAll(".page");
+const slideWidth = parseFloat(window.getComputedStyle(slideItems[0]).width) + parseInt(window.getComputedStyle(slideItems[0]).padding) * 2 + parseInt(window.getComputedStyle(slides).gap);
+frame.style.width = slideWidth - 10 + "px";
+slides.style.right = parseFloat(window.getComputedStyle(slideItems[0]).width) + parseInt(window.getComputedStyle(slideItems[0]).padding) * 2 + parseInt(window.getComputedStyle(slides).gap) + "px";
+let currentSlide = 1;
+let animationOver = true;
+let downPoint = 0;
+let startPos = parseFloat(window.getComputedStyle(slides).right);
+let isPressed = false;
+let difference = 0;
 let hiddenPress = false;
-let hiddenPressResolve = false;
-let hiddenFlagToUp = false;
+const diffBorder = ~~(slideWidth / 4);
 
-function switchSlide(index, isAnime = true) {
-  if (animationEnd) {
-    animationEnd = false;
-    if (isAnime) {
-      main.style.transition = "0.4s ease-in-out";
-    } else {
-      main.style.transition = "none";
-      animationEnd = true;
-    }
-    slideCount = index;
-    main.style.left = -mainWidth * slideCount + "px";
-  }
-}
-
-main.ontransitionend = () => {
-  main.style.transition = "none";
-  animationEnd = true;
-  if (slideCount === 0) switchSlide(items.length - 2, false);
-  if (slideCount === 7) switchSlide(1, false);
-  navigationWraps[0].parentElement.querySelector(".navigation-item--active").classList.remove("navigation-item--active");
-  navigations[slideCount - 1].classList.add("navigation-item--active");
-  if (hiddenPress) hiddenPressResolve = true;
-};
-
-function afterSwitch() {
-  if (Math.abs(event.pageX - pressPoint) > 100) {
-    event.pageX - pressPoint < 0 ? switchSlide(slideCount + 1) : switchSlide(slideCount - 1);
-  } else if (Math.abs(event.pageX - pressPoint) > 0) {
-    switchSlide(slideCount);
-  } else if (Math.abs(event.pageX - pressPoint) === 0) {
-    switchSlide(slideCount, false);
-  }
-}
-
-function upMouse() {
-  if (pressFlag) {
-    pressFlag = false;
-    afterSwitch();
-  }
-  if (hiddenPress) {
-    hiddenPress = false;
-    afterSwitch();
-    hiddenPressResolve = false;
-  }
-}
-
-buttonLeft.onclick = () => switchSlide(slideCount - 1);
-
-buttonRight.onclick = () => switchSlide(slideCount + 1);
-
-for (let i = 0; i < navigations.length; i++) {
-  navigationWraps[i].onclick = () => {
-    switchSlide(i + 1);
-    animationEnd = true;
-  }
-}
-
-main.onmousedown = (event) => {
-  if (animationEnd) {
-    pressFlag = true;
+function switchSlide(target, static = false) {
+  if (!animationOver) return;
+  if (!static) {
+    slides.style.transition = "0.25s ease-in-out";
+    animationOver = false;
   } else {
+    slides.style.transition = "";
+    animationOver = true;
+  }
+  currentSlide = target;
+  slides.style.right = currentSlide * slideWidth + "px";
+  highlightPage();
+}
+
+function highlightPage() {
+  pageDots.forEach((item) => item?.classList.remove("active-page"));
+  pageDots[currentSlide - 1]?.classList.add("active-page");
+}
+
+function afterSlide() {
+  slides.style.transition = "";
+  animationOver = true;
+  if (currentSlide < 1) switchSlide(slideItems.length - 2, true);
+  if (currentSlide > slideItems.length-2) switchSlide(1, true);
+  startPos = parseFloat(window.getComputedStyle(slides).right);
+}
+
+function onMouseDown(evt) {
+  if (animationOver) slides.style.transition = "";
+  startPos = parseFloat(window.getComputedStyle(slides).right);
+  downPoint = evt.clientX;
+  if (!animationOver) {
     hiddenPress = true;
-    hiddenFlagToUp = true;
+    return;
   }
-  upPoint = parseFloat(window.getComputedStyle(main).left);
-  pressPoint = event.pageX;
-};
+  isPressed = true;
+}
 
-main.onmousemove = (event) => {
-  if (hiddenPressResolve && hiddenFlagToUp) {
-    hiddenFlagToUp = false;
-    upPoint = parseFloat(window.getComputedStyle(main).left);
-  }
-  if (pressFlag || hiddenPressResolve) {
-    main.style.left = event.pageX - pressPoint + upPoint + "px";
-  }
-};
+function onMouseMove(evt) {
+  if ((!isPressed && !hiddenPress) || !animationOver) return;
+  difference = downPoint - evt.clientX;
+  slides.style.right = difference + startPos + "px";
+}
 
-main.onmouseup = () => {
-  upMouse();
-};
+function onMouseUp(evt) {
+  if (!isPressed && !hiddenPress) return;
+  isPressed = false;
+  hiddenPress = false;
+  if (difference > diffBorder) switchSlide(currentSlide + 1);
+  else if (difference <= -diffBorder) switchSlide(currentSlide - 1);
+  else if (difference === 0) switchSlide(currentSlide, true);
+  else switchSlide(currentSlide);
+  difference = 0;
+}
 
-superMain.onmouseleave = () => {
-  upMouse();
-};
+highlightPage();
+buttons.forEach((item) => (item.onclick = () => switchSlide(currentSlide + ~~item.dataset.direction)));
+slides.ontransitionend = afterSlide;
+slides.onmousedown = (evt) => onMouseDown(evt);
+slides.onmousemove = (evt) => onMouseMove(evt);
+slides.onmouseup = (evt) => onMouseUp(evt);
+slides.onmouseleave = (evt) => onMouseUp(evt);
+pages.forEach((item, index) => (item.onclick = () => (index + 1 !== currentSlide ? switchSlide(index + 1) : "")));

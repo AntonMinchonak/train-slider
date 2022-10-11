@@ -8,30 +8,33 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="wrap">
-        <div class="to-side"><div class="arrow"></div></div>
-    <div class="main">
-        <div class="main-frame">
-        <div class="item">6</div>
-        <div class="item">1</div>
-        <div class="item">2</div>
-        <div class="item">3</div>
-        <div class="item">4</div>
-        <div class="item">5</div>
-        <div class="item">6</div>
-        <div class="item">1</div>
+ <body>
+<div class="slider-block">
+<div class="slider">
+    <button class="button left" data-direction="-1"></button>
+    <div class="frame">
+        <div class="slides">
+            <div class="slide">6</div>
+            <div class="slide">1</div>
+            <div class="slide">2</div>
+            <div class="slide">3</div>
+            <div class="slide">4</div>
+            <div class="slide">5</div>
+            <div class="slide">6</div>
+            <div class="slide">1</div>
         </div>
     </div>
-    <div class="to-side"><div class="arrow left"></div></div>
-    </div>
-    <div class="navigation">
-         <div class="navigation-wrap"><div class="navigation-item navigation-item--active"></div></div>
-         <div class="navigation-wrap"><div class="navigation-item"></div></div>
-         <div class="navigation-wrap"><div class="navigation-item"></div></div>
-         <div class="navigation-wrap"><div class="navigation-item"></div></div>
-         <div class="navigation-wrap"><div class="navigation-item"></div></div>
-         <div class="navigation-wrap"><div class="navigation-item"></div></div>
-    </div>
-    <script src="script.js"></script>
+     <button class="button right" data-direction="+1"></button>
+</div>
+<div class="pagination">
+     <div class="page-wrap"><div class="page"></div></div>
+     <div class="page-wrap"><div class="page"></div></div>
+     <div class="page-wrap"><div class="page"></div></div>
+     <div class="page-wrap"><div class="page"></div></div>
+     <div class="page-wrap"><div class="page"></div></div>
+     <div class="page-wrap"><div class="page"></div></div>
+</div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

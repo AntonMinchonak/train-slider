@@ -10,10 +10,9 @@ function createSlider(options) {
   const [pages, pageDots] = createBreadcrumbs();
   highlightPage();
   const isWrongScroll = trueSlidesNumber % scrolledSlides > 0;
-  const slideWidth = parseFloat(window.getComputedStyle(slideItems[0]).width) + parseInt(window.getComputedStyle(slideItems[0]).padding) * 2 + parseInt(window.getComputedStyle(slides).gap);
-  frame.style.width = slideWidth * slideCount - 10 + "px";
-  slides.style.right =
-    (parseFloat(window.getComputedStyle(slideItems[0]).width) + parseInt(window.getComputedStyle(slideItems[0]).padding) * 2 + parseInt(window.getComputedStyle(slides).gap)) * slideCount + "px";
+  const slideWidth = slideItems[0].getBoundingClientRect().width + parseInt(window.getComputedStyle(slides).gap);
+  frame.style.width = slideWidth * slideCount - parseInt(window.getComputedStyle(slides).gap) + "px";
+  slides.style.right = slideWidth * slideCount + "px";
   const diffBorder = ~~(slideWidth / 1.3);
   let animationOver = true;
   let downPoint = 0;
